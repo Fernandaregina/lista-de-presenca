@@ -1,7 +1,7 @@
 
 import './styles.css'
 // useState são hooks
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Card } from '../componentes/card';
 
@@ -9,6 +9,7 @@ import { Card } from '../componentes/card';
 export function Home() {
   const [studentName,setStudentName] = useState ('') ;
   const [students,setStudents] = useState ([]) ;
+  const [user, setUser] = useState ({name: "", avatar: ""})
 
   function handleAddStudent (){
     const newStudent = {
@@ -22,10 +23,28 @@ export function Home() {
     // salvando as informações anteriores com as novas - e formar a listagem
     setStudents (prevState =>[...prevState, newStudent]);
   }
+  
+  useEffect(() => {
+    fetch('https://api.github.com/users/Fernandaregina')
+    .then( (response) => response.json())
+    .then( (data) => {
+      setUser({
+      name: data.name,
+      avatar: data.avatar_url,
+      })
 
+    })
+  })
+  
   return(
     <div className="container">
-      <h1>Lista de Presença</h1>
+      <header>
+        <h1>Lista de Presença</h1>
+        <div>
+          <strong>{user.name}</strong>
+          <img src={user.avatar} alt="Foto de perfil " />
+        </div>
+      </header>
       <input 
         type="text" 
         placeholder="Digite seu Nome"
@@ -51,7 +70,7 @@ export function Home() {
     </div>
   )
   
-  
-}
+ } 
+
 
 
