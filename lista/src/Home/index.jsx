@@ -1,9 +1,11 @@
 
 import './styles.css'
+// useState são hooks
 import React, { useState } from "react";
 
 import { Card } from '../componentes/card';
 
+// função quando alguem digita o nome e salvando ela
 export function Home() {
   const [studentName,setStudentName] = useState ('') ;
   const [students,setStudents] = useState ([]) ;
@@ -17,7 +19,7 @@ export function Home() {
         second:'2-digit'
       })
     };
-
+    // salvando as informações anteriores com as novas - e formar a listagem
     setStudents (prevState =>[...prevState, newStudent]);
   }
 
@@ -36,9 +38,15 @@ export function Home() {
       </button>
 
       { 
-      students.map(student => <Card name={student.name} time={student.time} /> )
+      students.map(student => (
+        <Card 
+        // key normalmente utilizamos ID 
+        key={student.time}
+        name={student.name} 
+        time={student.time} 
+        /> )
         
-      }
+      )}
       
     </div>
   )
